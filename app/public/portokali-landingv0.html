@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portokali - Alma Mediterránea | Café de Especialidad & Gastronomía</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange-primary: #FF6B35;
+            --orange-light: #FFB084;
+            --orange-dark: #E85A2C;
+            --mediterranean-blue: #2E86AB;
+            --cream: #FFF3E0;
+            --dark-brown: #3E2723;
+            --sage-green: #7FB069;
+            --gold: #FFD700;
+            --whatsapp-green: #25D366;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-brown);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFFFFF 50%, #FFF8E1 100%);
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .coffee-cup {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--orange-primary);
+            border-radius: 0 0 30px 30px;
+            position: relative;
+            animation: steam 2s infinite;
+        }
+
+        .coffee-cup::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            border: 3px solid var(--orange-primary);
+            border-radius: 50%;
+            background: var(--cream);
+        }
+
+        @keyframes steam {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--orange-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '🍊';
+            font-size: 1.5rem;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--dark-brown);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--orange-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--mediterranean-blue);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #666;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.7s forwards;
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .coffee-circle {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--orange-light), var(--orange-primary));
+            border-radius: 50%;
+            position: relative;
+            animation: pulse 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* CTA Buttons */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 2px solid var(--orange-primary);
+            color: var(--orange-primary);
+        }
+
+        .cta-secondary:hover {
+            background: var(--orange-primary);
+            color: white;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--orange-primary);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--orange-primary), transparent);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--orange-primary), var(--mediterranean-blue));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* BOMA Section */
+        #boma {
+            background: linear-gradient(135deg, #fff 0%, var(--cream) 100%);
+            padding: 5rem 2rem;
+            margin: 3rem auto;
+            border-radius: 30px;
+            max-width: 1200px;
+        }
+
+        .boma-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .boma-announcement {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .boma-badge {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .boma-title {
+            font-size: 2.5rem;
+            color: var(--orange-primary);
+            margin: 1rem 0;
+        }
+
+        .boma-subtitle {
+            font-size: 1.2rem;
+            color: var(--mediterranean-blue);
+            font-style: italic;
+        }
+
+        .boma-content {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .boma-definition {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .boma-definition h3 {
+            color: var(--orange-primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .boma-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .boma-impact h3 {
+            text-align: center;
+            color: var(--orange-primary);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .impact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .impact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--orange-primary), var(--mediterranean-blue));
+        }
+
+        .impact-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .impact-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--orange-primary), var(--mediterranean-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .impact-text {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--orange-primary), var(--mediterranean-blue));
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--orange-primary);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2);
+        }
+
+        .phase-title {
+            font-size: 1.5rem;
+            color: var(--orange-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expand-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .expand-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .phase-date {
+            color: var(--mediterranean-blue);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .phase-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+            padding-top: 0;
+            border-top: 2px solid transparent;
+        }
+
+        .phase-details.active {
+            max-height: 800px;
+            padding-top: 1rem;
+            border-top: 2px solid var(--orange-light);
+        }
+
+        .phase-details h4 {
+            color: var(--mediterranean-blue);
+            margin-bottom: 1rem;
+        }
+
+        .phase-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .phase-details li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .phase-details li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage-green);
+            font-weight: bold;
+        }
+
+        .phase-goal {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(46, 134, 171, 0.1));
+            border-radius: 10px;
+        }
+
+        /* Chef Section */
+        .chef-section {
+            background: linear-gradient(135deg, var(--cream) 0%, white 100%);
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chef-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .chef-avatar {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--orange-light), var(--orange-primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .chef-quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #666;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .chef-quote::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 4rem;
+            color: var(--orange-light);
+            font-family: Georgia, serif;
+        }
+
+        /* Video Frame Styles */
+        .video-frame {
+            margin: 1.5rem 0;
+            position: relative;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .video-placeholder {
+            aspect-ratio: 9/16;
+            max-width: 300px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--orange-primary);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .video-placeholder:hover .play-button {
+            background: var(--orange-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .video-placeholder p {
+            color: white;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            background: #20BA5A;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-button svg {
+            flex-shrink: 0;
+        }
+
+        /* Masterclass Cards */
+        .masterclass-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .masterclass-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .masterclass-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .masterclass-header {
+            background: linear-gradient(135deg, var(--orange-primary), var(--mediterranean-blue));
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .masterclass-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .masterclass-body {
+            padding: 2rem;
+        }
+
+        /* Investment Plans */
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--orange-primary), var(--mediterranean-blue));
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .plan-phase {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--orange-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-date {
+            color: var(--mediterranean-blue);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-items {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-items li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .plan-items li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-total {
+            background: linear-gradient(135deg, var(--orange-light), var(--orange-primary));
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Value Section */
+        .value-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            color: var(--orange-primary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--orange-primary), var(--mediterranean-blue));
+            color: white;
+            border-radius: 30px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .final-cta {
+            background: white;
+            color: var(--orange-primary);
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .final-cta:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-brown);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-heart {
+            color: var(--orange-primary);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .coffee-circle {
+                width: 250px;
+                height: 250px;
+                margin: 0 auto;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .chef-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .chef-avatar {
+                margin: 0 auto;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="coffee-cup"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Portokali</a>
+            <ul class="nav-menu">
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#boma">BOMA</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#chef">Chef</a></li>
+                <li><a href="#investment">Inversión</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>🍊 Portokali</h1>
+                <p class="hero-subtitle">Alma Mediterránea</p>
+                <p class="hero-description">
+                    Una cafetería boutique donde el café de especialidad se encuentra con la tradición gourmet del Mediterráneo.
+                    Con la Chef <strong>Anita María</strong> como alma y embajadora de la experiencia.
+                </p>
+                <div>
+                    <a href="#roadmap" class="cta-button">👉 Descubre el Plan</a>
+                    <a href="#contact" class="cta-button cta-secondary">Hablemos</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="coffee-circle">☕</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="scroll-reveal">
+        <h2 class="section-title">🌿 ¿Qué es Portokali?</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem;">
+            Portokali no es solo una cafetería. Es un caso real de cómo construir una marca gastronómica moderna, automatizada y con alma humana.
+        </p>
+        <div class="about-grid">
+            <div class="feature-card">
+                <div class="feature-icon">☕</div>
+                <h3>Café de Especialidad</h3>
+                <p>Café premium y recetas mediterráneas únicas</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍦</div>
+                <h3>Helados Artesanales</h3>
+                <p>Sin azúcar, creados por la Chef Anita María</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Tecnología Fluida</h3>
+                <p>Toteat, reservas, delivery, programa de lealtad</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Estrategia Digital</h3>
+                <p>Plan integral documentado por Poweredia</p>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem;">
+            📍 <strong>Ubicación:</strong> Buenaventura 1888
+        </p>
+    </section>
+
+    <!-- BOMA Section -->
+    <section id="boma" class="scroll-reveal">
+        <div class="boma-container">
+            <div class="boma-announcement">
+                <span class="boma-badge">GRAN ANUNCIO</span>
+                <h2 class="boma-title">🎉 La Fase 1 se lanzará con un BOMA</h2>
+                <p class="boma-subtitle">(Brand Owned Media Activation)</p>
+            </div>
+            
+            <div class="boma-content">
+                <div class="boma-definition">
+                    <h3>¿Qué es BOMA?</h3>
+                    <p class="boma-description">
+                        El <strong>Boca a Boca Marketing Amplificado</strong>: transformar a los primeros clientes en embajadores de marca mediante experiencias memorables y compartibles.
+                    </p>
+                </div>
+                
+                <div class="boma-impact">
+                    <h3>📊 Impacto probado:</h3>
+                    <div class="impact-cards">
+                        <div class="impact-card">
+                            <div class="impact-number">92%</div>
+                            <div class="impact-text">confía en recomendaciones personales</div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-number">5x</div>
+                            <div class="impact-text">más efectivo que publicidad tradicional</div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-number">∞</div>
+                            <div class="impact-text">Alcance orgánico exponencial</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="scroll-reveal">
+        <h2 class="section-title">📆 Roadmap Estratégico 2025–2026</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="togglePhase('phase0')">
+                    <div class="phase-title">⚙️ Fase 0 <span class="expand-icon">▼</span></div>
+                    <div class="phase-date">Septiembre - Octubre 2025</div>
+                    <p>Infraestructura digital y operativa completa: dominio, web "Coming Soon", Toteat, POS de prueba, CRM y perfiles en redes.</p>
+                    <div id="phase0" class="phase-details">
+                        <h4>Configuración Tecnológica y de Marca</h4>
+                        <ul>
+                            <li><strong>Dominio y Hosting:</strong> Configuración profesional del sitio web</li>
+                            <li><strong>Landing "Coming Soon":</strong> Página de expectación con captura de leads</li>
+                            <li><strong>Sistema Toteat:</strong> Implementación completa del sistema de pedidos</li>
+                            <li><strong>POS de Prueba:</strong> Configuración y testing del punto de venta</li>
+                            <li><strong>CRM Inicial:</strong> Base de datos de clientes potenciales</li>
+                            <li><strong>Perfiles Sociales:</strong> Instagram, Facebook, TikTok optimizados</li>
+                            <li><strong>Google My Business:</strong> Perfil completo con fotos y descripción</li>
+                            <li><strong>Identidad Visual:</strong> Logo, paleta de colores, tipografías</li>
+                        </ul>
+                        <p class="phase-goal"><strong>Objetivo:</strong> Tener toda la infraestructura lista para el lanzamiento</p>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="togglePhase('phase1')">
+                    <div class="phase-title">🌱 Fase 1 <span class="expand-icon">▼</span></div>
+                    <div class="phase-date">Octubre - Diciembre 2025</div>
+                    <p>Expectación: reels con Anita María, masterclasses, campaña georreferenciada, Soft Opening VIP y comunidad digital.</p>
+                    <div id="phase1" class="phase-details">
+                        <h4>Awareness & Consideración</h4>
+                        <ul>
+                            <li><strong>Contenido con Chef Anita:</strong> 3 reels semanales mostrando recetas exclusivas</li>
+                            <li><strong>Masterclasses VIP:</strong> 2 eventos exclusivos para early adopters</li>
+                            <li><strong>Campaña Geolocalizada:</strong> Ads en 2km a la redonda</li>
+                            <li><strong>Soft Opening VIP:</strong> Evento para 50 invitados especiales</li>
+                            <li><strong>Influencers Locales:</strong> Colaboración con 5 micro-influencers</li>
+                            <li><strong>Email Marketing:</strong> Newsletter semanal con contenido exclusivo</li>
+                            <li><strong>Concursos en RRSS:</strong> Sorteos para generar engagement</li>
+                            <li><strong>Blog de Recetas:</strong> SEO optimizado con recetas mediterráneas</li>
+                        </ul>
+                        <p class="phase-goal"><strong>Objetivo:</strong> Crear expectación y construir una comunidad de 1,000 seguidores</p>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="togglePhase('phase2')">
+                    <div class="phase-title">☕ Fase 2 <span class="expand-icon">▼</span></div>
+                    <div class="phase-date">Enero - Marzo 2026</div>
+                    <p>Decisión: gran inauguración oficial, campañas de productos "vaca y estrella", landing evolucionada con menú completo, reservas y delivery, programa de lealtad.</p>
+                    <div id="phase2" class="phase-details">
+                        <h4>Decisión & Conversión</h4>
+                        <ul>
+                            <li><strong>Gran Inauguración:</strong> Evento para 200 personas con prensa local</li>
+                            <li><strong>Productos Estrella:</strong> Campaña focalizada en bestsellers</li>
+                            <li><strong>Web Full:</strong> Menú completo, reservas online, pedidos</li>
+                            <li><strong>Delivery Activo:</strong> Integración con Uber Eats y Rappi</li>
+                            <li><strong>Programa de Lealtad:</strong> Puntos y beneficios exclusivos</li>
+                            <li><strong>Google Ads:</strong> Campaña SEM para búsquedas locales</li>
+                            <li><strong>Retargeting:</strong> Recuperación de visitantes web</li>
+                            <li><strong>Partnerships:</strong> Alianzas con empresas locales</li>
+                            <li><strong>Eventos Temáticos:</strong> Noches mediterráneas mensuales</li>
+                        </ul>
+                        <p class="phase-goal"><strong>Objetivo:</strong> Alcanzar 500 clientes recurrentes y 100 pedidos diarios</p>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content" onclick="togglePhase('phase3')">
+                    <div class="phase-title">💫 Fase 3 <span class="expand-icon">▼</span></div>
+                    <div class="phase-date">Abril 2026 →</div>
+                    <p>Fidelización: optimización de programa de puntos, newsletter, eventos gourmet, productos estacionales y publicidad retargeting.</p>
+                    <div id="phase3" class="phase-details">
+                        <h4>Acción & Fidelización</h4>
+                        <ul>
+                            <li><strong>App Móvil:</strong> Aplicación propia con pedidos y rewards</li>
+                            <li><strong>Club VIP:</strong> Membresía premium con beneficios exclusivos</li>
+                            <li><strong>Productos Estacionales:</strong> Menú rotativo cada temporada</li>
+                            <li><strong>Newsletter Premium:</strong> Contenido exclusivo para suscriptores</li>
+                            <li><strong>Eventos Gourmet:</strong> Catas, maridajes y masterclasses mensuales</li>
+                            <li><strong>Programa Referidos:</strong> Beneficios por traer nuevos clientes</li>
+                            <li><strong>CRM Avanzado:</strong> Personalización basada en comportamiento</li>
+                            <li><strong>Expansión:</strong> Evaluación de segunda sucursal</li>
+                            <li><strong>Productos Retail:</strong> Línea de productos para llevar a casa</li>
+                        </ul>
+                        <p class="phase-goal"><strong>Objetivo:</strong> 80% de retención de clientes y 30% de crecimiento mensual</p>
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section id="chef" class="chef-section scroll-reveal">
+        <h2 class="section-title">👩‍🍳 Sesión con la Chef Anita María</h2>
+        <div class="chef-content">
+            <div class="chef-avatar">👩‍🍳</div>
+            <div>
+                <p class="chef-quote">
+                    La cocina mediterránea no es solo sabor, es salud, estética y alegría. Te invito a ser parte de esta experiencia única en Portokali.
+                </p>
+                <div class="video-frame">
+                    <a href="https://youtube.com/shorts/lTvlB4vEQHQ" target="_blank" class="video-link">
+                        <div class="video-placeholder">
+                            <div class="play-button">▶</div>
+                            <p>Video Reel con Chef Anita María</p>
+                            <span class="video-duration">00:30</span>
+                        </div>
+                    </a>
+                </div>
+                <a href="https://wa.me/56994329189?text=Hola%20Chef%20Anita!%20Quiero%20vivir%20la%20experiencia%20Portokali%20🍊" 
+                   target="_blank" 
+                   class="whatsapp-button">
+                   <svg viewBox="0 0 24 24" width="24" height="24">
+                       <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                   </svg>
+                   <span>Quiero vivir la experiencia Portokali</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Masterclasses Section -->
+    <section class="scroll-reveal">
+        <h2 class="section-title">🎓 Masterclasses Exclusivas</h2>
+        <div class="masterclass-grid">
+            <div class="masterclass-card">
+                <div class="masterclass-header">
+                    <div class="masterclass-icon">🍦</div>
+                    <h3>Helados Artesanales Sin Azúcar</h3>
+                </div>
+                <div class="masterclass-body">
+                    <p>Aprende los secretos de la Chef Anita María para crear helados saludables y deliciosos.</p>
+                    <a href="https://wa.me/56994329189?text=Hola%20Chef%20Anita!%20Quiero%20reservar%20mi%20cupo%20VIP%20para%20la%20masterclass%20de%20helados%20artesanales%20🍦" 
+                       target="_blank"
+                       class="cta-button" 
+                       style="margin-top: 1rem; display: block; text-align: center;">
+                       Reserva tu cupo VIP
+                    </a>
+                </div>
+            </div>
+            <div class="masterclass-card">
+                <div class="masterclass-header">
+                    <div class="masterclass-icon">🍪</div>
+                    <h3>Galletas Gourmet Mediterráneas para Niños</h3>
+                </div>
+                <div class="masterclass-body">
+                    <p>Descubre cómo hacer galletas nutritivas que encantarán a los más pequeños.</p>
+                    <a href="https://wa.me/56994329189?text=Hola%20Chef%20Anita!%20Quiero%20reservar%20mi%20cupo%20VIP%20para%20la%20masterclass%20de%20galletas%20mediterráneas%20🍪" 
+                       target="_blank"
+                       class="cta-button" 
+                       style="margin-top: 1rem; display: block; text-align: center;">
+                       Reserva tu cupo VIP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Section -->
+    <section id="investment" class="scroll-reveal">
+        <h2 class="section-title">💰 Plan de Inversión por Fases</h2>
+        <div class="investment-grid">
+            <div class="plan-card">
+                <div class="plan-phase">⚙️ Fase 0</div>
+                <div class="plan-date">📆 Septiembre 2025</div>
+                <ul class="plan-items">
+                    <li>
+                        <span>Infraestructura Digital</span>
+                        <span>$175.000</span>
+                    </li>
+                    <li>
+                        <span>Identidad Visual + RRSS</span>
+                        <span>$190.000</span>
+                    </li>
+                    <li>
+                        <span>Dirección Estratégica</span>
+                        <span>$300.000</span>
+                    </li>
+                </ul>
+                <div class="plan-total">Total: CLP $665.000</div>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-phase">🌱 Fase 1</div>
+                <div class="plan-date">📆 Oct - Dic 2025</div>
+                <ul class="plan-items">
+                    <li>
+                        <span>Community Manager</span>
+                        <span>$400.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Dirección Estratégica</span>
+                        <span>$300.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Publicidad Ads</span>
+                        <span>$150-300k/mes</span>
+                    </li>
+                </ul>
+                <div class="plan-total">Total mensual: $700.000</div>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-phase">☕ Fase 2</div>
+                <div class="plan-date">📆 Ene - Mar 2026</div>
+                <ul class="plan-items">
+                    <li>
+                        <span>Community Manager</span>
+                        <span>$400.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Dirección Estratégica</span>
+                        <span>$300.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Actualización Web</span>
+                        <span>$800.000 (único)</span>
+                    </li>
+                </ul>
+                <div class="plan-total">Total mensual: $700.000 + Web</div>
+            </div>
+            
+            <div class="plan-card">
+                <div class="plan-phase">💫 Fase 3</div>
+                <div class="plan-date">📆 Abril 2026 →</div>
+                <ul class="plan-items">
+                    <li>
+                        <span>Community Manager</span>
+                        <span>$400.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Dirección Estratégica</span>
+                        <span>$300.000/mes</span>
+                    </li>
+                    <li>
+                        <span>Publicidad Ads</span>
+                        <span>$300.000/mes</span>
+                    </li>
+                </ul>
+                <div class="plan-total">Total mensual: $1.000.000</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Section -->
+    <section class="scroll-reveal">
+        <h2 class="section-title">🌟 Valor Estratégico</h2>
+        <div class="value-list">
+            <div class="value-item">
+                <span class="value-icon">🎯</span>
+                <span>Estrategia integral de 0 a fidelización</span>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">👩‍🍳</span>
+                <span>Chef Anita María como rostro y embajadora</span>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">🚀</span>
+                <span>Innovación digital: Toteat, reservas, delivery, CRM</span>
+            </div>
+            <div class="value-item">
+                <span class="value-icon">📈</span>
+                <span>ROI optimizado con dirección estratégica</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section scroll-reveal">
+        <h2 style="color: white; font-size: 2.5rem; margin-bottom: 2rem;">📞 Contacto</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>📍</span>
+                <span>Buenaventura 1888</span>
+            </div>
+            <div class="contact-item">
+                <span>📱</span>
+                <span>+56 9 6405 2231</span>
+            </div>
+            <div class="contact-item">
+                <span>📧</span>
+                <span>felipe@poweredia.cl</span>
+            </div>
+        </div>
+        <button class="final-cta" onclick="acceptProposal()">
+            👉 ACEPTO la propuesta y quiero hablar con Felipe
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Portokali – Alma Mediterránea</p>
+        <p>Creado con <span class="footer-heart">🧡</span> por Poweredia para transformar la experiencia gastronómica</p>
+    </footer>
+
+    <script>
+        // Hide loader after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Accept proposal function - WhatsApp
+        function acceptProposal() {
+            const message = encodeURIComponent('Hola Felipe! ACEPTO la propuesta de Portokali. Me gustaría conversar contigo para comenzar con el proyecto 🍊');
+            window.open(`https://wa.me/56964052231?text=${message}`, '_blank');
+        }
+
+        // Toggle phase details
+        function togglePhase(phaseId) {
+            const phaseElement = document.getElementById(phaseId);
+            const allPhases = document.querySelectorAll('.phase-details');
+            const allIcons = document.querySelectorAll('.expand-icon');
+            
+            // Close all other phases
+            allPhases.forEach(phase => {
+                if (phase.id !== phaseId) {
+                    phase.classList.remove('active');
+                }
+            });
+            
+            // Reset all icons
+            allIcons.forEach(icon => {
+                icon.classList.remove('rotated');
+            });
+            
+            // Toggle current phase
+            phaseElement.classList.toggle('active');
+            
+            // Rotate current icon
+            const currentIcon = phaseElement.parentElement.querySelector('.expand-icon');
+            if (phaseElement.classList.contains('active')) {
+                currentIcon.classList.add('rotated');
+            }
+        }
+
+        // Add parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const speed = 0.5;
+            hero.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+
+        // Add hover effect to cards
+        document.querySelectorAll('.feature-card, .plan-card, .masterclass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
